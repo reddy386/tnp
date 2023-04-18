@@ -1,0 +1,24 @@
+
+public ExtentSparkReporter htmlRepoter;
+	public ExtentReports extent;
+	public ExtentTest test;
+	@BeforeSuite
+	public void StartReport() {
+	htmlRepoter= new  ExtentSparkReporter(System.getProperty(("user.dir")+"/ExtentReporter.html"));
+	extent =new ExtentReports();
+extent.attachReporter(htmlRepoter);
+extent.setSystemInfo("HostName", "YashwanthReddy");
+extent.setSystemInfo("Enviroment", "QA");
+extent.setSystemInfo("User", "Yashwanth");
+htmlRepoter.config().setDocumentTitle("Extent Reporter");
+htmlRepoter.config().setReportName("Tutorilasninja");
+htmlRepoter.config().setTheme(Theme.DARK);
+	
+}
+	
+	@AfterSuite
+	public void EndReport() {
+		extent.flush();
+	}
+	
+	

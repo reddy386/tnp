@@ -1,0 +1,26 @@
+WebDriver driver;
+	public ExtentTest test;
+
+	 public static String getScreenshot(WebDriver driver, String screenshotName) throws Exception {
+	String datename=new SimpleDateFormat("yyyy/MM/ddhhmmss").format(new Date());
+	TakesScreenshot ts=(TakesScreenshot)driver;
+	File source=ts.getScreenshotAs(OutputType.FILE);
+	String destination =System.getProperty(("user.dir")+screenshotName+datename+".png");
+	File finaldestination =new File(destination);
+	FileUtils.copyDirectory(source, finaldestination);
+	return destination;
+	
+	
+	 }
+
+@AfterMethod
+public void aftertest(ITestResult result) throws Exception {
+	if(result.getStatus()==ITestResult.SUCCESS) {
+		test.log(Status.FAIL,"The TestCase is working Fine");
+		
+	}else if(result.getStatus()==ITestResult.FAILURE) {
+		String screenshotPath=getScreenshot(driver,result.getName());
+		
+test.fail("Test case  falied  snapshot is below "+test.addScreenCaptureFromPath(screenshotPath));
+	}
+	driver.quit();
